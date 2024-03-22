@@ -1,0 +1,53 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="mb-3">
+          <div class="form-group">
+            <label for="targets">Targets</label>
+            <input type="text" class="form-control" id="targets" formControlName="targets" placeholder="Enter targets (comma separated)">
+            <div *ngIf="myForm.controls['targets'].invalid && myForm.controls['targets'].touched" class="invalid-feedback">
+              Targets are required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="excludeTargets">Exclude Targets</label>
+            <input type="text" class="form-control" id="excludeTargets" formControlName="exclude_targets" placeholder="Enter exclude targets (comma separated)">
+            <div *ngIf="myForm.controls['exclude_targets'].invalid && myForm.controls['exclude_targets'].touched" class="invalid-feedback">
+              Exclude Targets are required
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div *ngIf="responseData" class="mt-5">
+          <div [ngClass]="{'alert alert-success': messageType === 'success', 'alert alert-danger': messageType === 'error'}">
+            {{ message }}
+          </div>
+          <table *ngIf="responseData.data && responseData.data.length > 0" class="table">
+            <thead>
+              <tr>
+                <th>Target Domain</th>
+                <th>Excluded Target</th>
+                <th>Referring Domain</th>
+                <th>Rank</th>
+                <th>Backlinks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of responseData.data">
+                <td>{{ item.target_domain }}</td>
+                <td>{{ item.excluded_target }}</td>
+                <td>{{ item.referring_domain }}</td>
+                <td>{{ item.rank }}</td>
+                <td>{{ item.backlinks }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
